@@ -81,11 +81,11 @@ class TestSaleOrderNoAutofollow(NoAutofollowCommon):
     def test_sale_order_action_confirm(self):
         """
         'Customer no autofollow' mode is disabled in settings.
-        Test if there is a customer among the subscribers after confirming the order"""
+        Odoo 19 no longer subscribes the customer during confirmation."""
         self.sale_order_1.action_confirm()
 
-        self.assertIn(
+        self.assertNotIn(
             self.sale_order_1.partner_id.id,
             self.sale_order_1.message_follower_ids.mapped("partner_id").ids,
-            msg="The customer must be among the subscribers",
+            msg="Confirmation must preserve Odoo 19's default follower behavior",
         )
